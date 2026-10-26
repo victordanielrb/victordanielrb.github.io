@@ -1,0 +1,185 @@
+@import "tailwindcss";
+
+@layer base {
+  * {
+    font-family: Poppins, sans-serif;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: #0a0a0b;
+    margin: 0;
+    padding: 0;
+  }
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+}
+
+/* Neo-brutalist primitives ---------------------------------------------- */
+
+.font-display {
+  font-family: 'Archivo', Poppins, sans-serif;
+}
+
+/* Hard-edge border + offset block shadow, with a "press" interaction:
+   the element slides into its own shadow on hover/active. Offset and
+   accent color are overridable via --brutal-x / --brutal-y / --brutal-color. */
+.brutal {
+  --brutal-x: 6px;
+  --brutal-y: 6px;
+  --brutal-color: var(--color-purple-500);
+  box-shadow: var(--brutal-x) var(--brutal-y) 0 0 var(--brutal-color);
+  transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.brutal:hover,
+.brutal:active {
+  transform: translate(var(--brutal-x), var(--brutal-y));
+  box-shadow: 0 0 0 0 var(--brutal-color);
+}
+.brutal-static {
+  --brutal-x: 6px;
+  --brutal-y: 6px;
+  --brutal-color: var(--color-purple-500);
+  box-shadow: var(--brutal-x) var(--brutal-y) 0 0 var(--brutal-color);
+}
+
+/* Shadow appears and the tile lifts away on hover — for dense grids where a
+   permanent shadow on every tile would be too heavy. */
+.brutal-hover {
+  --brutal-x: 5px;
+  --brutal-y: 5px;
+  --brutal-color: var(--color-purple-500);
+  box-shadow: 0 0 0 0 transparent;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+.brutal-hover:hover {
+  box-shadow: var(--brutal-x) var(--brutal-y) 0 0 var(--brutal-color);
+  transform: translate(calc(var(--brutal-x) * -1), calc(var(--brutal-y) * -1));
+}
+
+@keyframes thumb-in {
+  from {
+    opacity: 0;
+    transform: scale(0.85) rotate(-2deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(-2deg);
+  }
+}
+.thumb-pop {
+  animation: thumb-in 0.15s ease-out;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.animate-fade-in {
+  animation: 0.4s ease-out forwards fade-in;
+}
+
+@keyframes fade-in-up {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.animate-fade-in-up {
+  animation: 0.5s ease-out forwards fade-in-up;
+}
+
+.expand-grid {
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  display: grid;
+}
+.expand-grid.expanded {
+  grid-template-rows: 1fr;
+}
+.expand-grid > div {
+  overflow: hidden;
+}
+
+.expand-content {
+  opacity: 0;
+  transition: opacity 0.25s 0.1s;
+}
+.expand-grid.expanded .expand-content {
+  opacity: 1;
+}
+
+section[id] {
+  scroll-margin-top: 5rem;
+}
+
+@keyframes backdrop-in {
+  from { opacity: 0; backdrop-filter: blur(0px); }
+  to   { opacity: 1; backdrop-filter: blur(4px); }
+}
+@keyframes backdrop-out {
+  from { opacity: 1; backdrop-filter: blur(4px); }
+  to   { opacity: 0; backdrop-filter: blur(0px); }
+}
+@keyframes modal-in {
+  from { opacity: 0; transform: scale(0.92) translateY(16px); }
+  to   { opacity: 1; transform: scale(1)    translateY(0); }
+}
+@keyframes modal-out {
+  from { opacity: 1; transform: scale(1)    translateY(0); }
+  to   { opacity: 0; transform: scale(0.95) translateY(12px); }
+}
+
+.modal-backdrop         { animation: backdrop-in  0.25s ease-out forwards; }
+.modal-backdrop.closing { animation: backdrop-out 0.2s ease forwards; }
+.modal-content          { animation: modal-in  0.32s cubic-bezier(0.22,1,0.36,1) forwards; }
+.modal-content.closing  { animation: modal-out 0.2s ease forwards; }
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Brutalist scrollbar — thin dark track, solid purple thumb with its own
+   border so it reads as one more bordered "object" in the system rather
+   than a default OS control. Applied globally; most visible on the
+   project modal's scrollable text column. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-purple-500) #131315;
+}
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-track {
+  background: #131315;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: var(--color-purple-500);
+  border-radius: 9999px;
+  border: 2px solid #131315;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-purple-400);
+}
+*::-webkit-scrollbar-corner {
+  background: #131315;
+}
