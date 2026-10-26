@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 import { useLanguage } from '../context/LanguageContext'
 
-const SECTIONS = ['about', 'projects', 'technologies'] as const
+const SECTIONS = ['about', 'projects', 'educational', 'technologies'] as const
 type Section = (typeof SECTIONS)[number]
 
 const SECTION_ICONS: Record<Section, string> = {
   about: 'fa-user',
   projects: 'fa-diagram-project',
+  educational: 'fa-graduation-cap',
   technologies: 'fa-layer-group',
 }
 
@@ -65,6 +66,7 @@ export default function Navbar() {
   const navLabels: Record<Section, string> = {
     about: t.nav.about,
     projects: t.nav.projects,
+    educational: t.nav.educational,
     technologies: t.nav.technologies,
   }
 
@@ -72,7 +74,7 @@ export default function Navbar() {
     <>
       {/* Center island — section nav, no mark/logo */}
       <nav
-        className="brutal-static font-display fixed top-4 sm:top-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-0.5 sm:gap-1 rounded-full border-[3px] border-zinc-100 bg-[#131315] px-1.5 py-1.5 sm:px-2 sm:py-2 [--brutal-x:4px] [--brutal-y:4px] sm:[--brutal-x:5px] sm:[--brutal-y:5px]"
+        className="brutal-static font-display fixed top-4 sm:top-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-0 sm:gap-1 rounded-full border-[3px] border-zinc-100 bg-[#131315] px-1.5 py-1.5 sm:px-2 sm:py-2 [--brutal-x:4px] [--brutal-y:4px] sm:[--brutal-x:5px] sm:[--brutal-y:5px]"
         aria-label="Section navigation"
       >
         {SECTIONS.map((id) => (
@@ -106,7 +108,7 @@ export default function Navbar() {
         <button
           onClick={() => switchTo('en')}
           aria-pressed={lang === 'en'}
-          className={`px-2 sm:px-3 py-1.5 rounded-full text-[11px] sm:text-xs font-extrabold tracking-tight transition-all duration-200 ${
+          className={`px-1.5 sm:px-3 py-1.5 rounded-full text-[11px] sm:text-xs font-extrabold tracking-tight transition-all duration-200 ${
             lang === 'en' ? 'bg-white text-[#0a0a0b]' : 'text-zinc-400 hover:text-white'
           }`}
         >
@@ -115,7 +117,7 @@ export default function Navbar() {
         <button
           onClick={() => switchTo('pt')}
           aria-pressed={lang === 'pt'}
-          className={`px-2 sm:px-3 py-1.5 rounded-full text-[11px] sm:text-xs font-extrabold tracking-tight transition-all duration-200 ${
+          className={`px-1.5 sm:px-3 py-1.5 rounded-full text-[11px] sm:text-xs font-extrabold tracking-tight transition-all duration-200 ${
             lang === 'pt' ? 'bg-white text-[#0a0a0b]' : 'text-zinc-400 hover:text-white'
           }`}
         >

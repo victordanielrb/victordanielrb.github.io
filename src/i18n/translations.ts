@@ -29,6 +29,7 @@ export interface Translations {
   nav: {
     about: string
     projects: string
+    educational: string
     technologies: string
   }
   hero: {
@@ -39,6 +40,7 @@ export interface Translations {
   }
   projects: {
     title: string
+    educationalTitle: string
     personalBadge: string
     educationalBadge: string
     challenges: string
@@ -271,6 +273,7 @@ export const translations: Record<Language, Translations> = {
     nav: {
       about: 'About',
       projects: 'Projects',
+      educational: 'Educational',
       technologies: 'Technologies',
     },
     hero: {
@@ -283,6 +286,7 @@ export const translations: Record<Language, Translations> = {
     },
     projects: {
       title: 'Projects',
+      educationalTitle: 'Educational',
       personalBadge: 'Personal',
       educationalBadge: 'Educational',
       challenges: 'Challenges',
@@ -325,6 +329,7 @@ export const translations: Record<Language, Translations> = {
     nav: {
       about: 'Sobre',
       projects: 'Projetos',
+      educational: 'Educacional',
       technologies: 'Tecnologias',
     },
     hero: {
@@ -337,6 +342,7 @@ export const translations: Record<Language, Translations> = {
     },
     projects: {
       title: 'Projetos',
+      educationalTitle: 'Educacional',
       personalBadge: 'Pessoal',
       educationalBadge: 'Educacional',
       challenges: 'Desafios',

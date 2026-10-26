@@ -11,8 +11,8 @@ import { useLanguage } from '../context/LanguageContext'
 function HomeContent() {
   const { t } = useLanguage()
 
-  // Educational (non-personal) work is listed first.
-  const projects = [...t.projectList].sort((a, b) => (a.personal ? 1 : 0) - (b.personal ? 1 : 0))
+  const personalProjects = t.projectList.filter((project) => project.personal)
+  const educationalProjects = t.projectList.filter((project) => !project.personal)
 
   return (
     <div className="min-h-full text-white">
@@ -37,7 +37,17 @@ function HomeContent() {
           <section id="projects" className="animate-fade-in-up">
             <SectionHeading>{t.projects.title}</SectionHeading>
             <div className="border-t-[3px] border-zinc-100/15">
-              {projects.map((project, i) => (
+              {personalProjects.map((project, i) => (
+                <ProjectCard key={project.title} project={project} index={i + 1} />
+              ))}
+            </div>
+          </section>
+
+          {/* Educational projects */}
+          <section id="educational" className="animate-fade-in-up">
+            <SectionHeading>{t.projects.educationalTitle}</SectionHeading>
+            <div className="border-t-[3px] border-zinc-100/15">
+              {educationalProjects.map((project, i) => (
                 <ProjectCard key={project.title} project={project} index={i + 1} />
               ))}
             </div>
