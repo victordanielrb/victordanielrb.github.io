@@ -12,18 +12,30 @@ const SECTION_ICONS: Record<Section, string> = {
 
 export default function Navbar() {
   const { t, lang, switchTo } = useLanguage()
-  const [active, setActive] = useState<Section>('about')
+  const [scrolled, setScrolled] = useState<Section>('about')
+  const [hovered, setHovered] = useState<Section | null>(null)
   const observerRef = useRef<IntersectionObserver | null>(null)
+
+  // Hover wins over scroll position; releasing the pointer hands the highlight
+  // back to whichever section the observer last reported.
+  const active = hovered ?? scrolled
 
   useEffect(() => {
     const map = new Map<Element, Section>()
+    const elements: Element[] = []
+
+    const onEnter = (e: Event) => {
+      const id = map.get(e.currentTarget as Element)
+      if (id) setHovered(id)
+    }
+    const onLeave = () => setHovered(null)
 
     observerRef.current = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             const id = map.get(entry.target)
-            if (id) setActive(id)
+            if (id) setScrolled(id)
           }
         })
       },
@@ -35,10 +47,19 @@ export default function Navbar() {
       if (el) {
         map.set(el, id)
         observerRef.current!.observe(el)
+        el.addEventListener('mouseenter', onEnter)
+        el.addEventListener('mouseleave', onLeave)
+        elements.push(el)
       }
     })
 
-    return () => observerRef.current?.disconnect()
+    return () => {
+      observerRef.current?.disconnect()
+      elements.forEach((el) => {
+        el.removeEventListener('mouseenter', onEnter)
+        el.removeEventListener('mouseleave', onLeave)
+      })
+    }
   }, [])
 
   const navLabels: Record<Section, string> = {
