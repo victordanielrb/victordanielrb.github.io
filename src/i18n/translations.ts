@@ -40,6 +40,7 @@ export interface Translations {
   projects: {
     title: string
     personalBadge: string
+    educationalBadge: string
     challenges: string
     viewProject: string
   }
@@ -73,7 +74,7 @@ const mainTech: TechItem[] = [
 ]
 
 const extraTech: TechItem[] = [
-  { name: 'AWS', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg', description: 'Cloud infrastructure' },
+  { name: 'AWS', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-plain.svg', description: 'Cloud infrastructure' },
   { name: 'GCP', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original.svg', description: 'Google Cloud Platform' },
   { name: 'Agile', icon: 'fas fa-arrows-rotate', description: 'Scrum and Kanban' },
   { name: 'Java', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg', description: 'Enterprise and robust language' },
@@ -283,6 +284,7 @@ export const translations: Record<Language, Translations> = {
     projects: {
       title: 'Projects',
       personalBadge: 'Personal',
+      educationalBadge: 'Educational',
       challenges: 'Challenges',
       viewProject: 'View Project',
     },
@@ -336,6 +338,7 @@ export const translations: Record<Language, Translations> = {
     projects: {
       title: 'Projetos',
       personalBadge: 'Pessoal',
+      educationalBadge: 'Educacional',
       challenges: 'Desafios',
       viewProject: 'Ver Projeto',
     },

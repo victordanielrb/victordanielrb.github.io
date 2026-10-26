@@ -4,7 +4,7 @@ interface TagProps {
 }
 
 export default function Tag({ label, variant = 'default' }: TagProps) {
-  const base = 'font-display text-[11px] sm:text-xs font-bold uppercase tracking-tight px-2.5 py-1 rounded-full border-[2px]'
+  const base = 'brutal font-display text-[11px] sm:text-xs font-bold uppercase tracking-tight px-2.5 py-1 rounded-full border-[2px] [--brutal-x:2px] [--brutal-y:2px]'
   const styles =
     variant === 'purple'
       ? `${base} bg-purple-500 text-white border-zinc-100`

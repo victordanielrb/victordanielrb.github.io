@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router'
 import HomePage from './pages/Home'
+import CursorSticker from './components/CursorSticker'
 
 function AppRoutes() {
   return (
@@ -11,8 +12,11 @@ function AppRoutes() {
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <AppRoutes />
-    </BrowserRouter>
+    <>
+      <BrowserRouter>
+        <AppRoutes />
+      </BrowserRouter>
+      <CursorSticker />
+    </>
   )
 }

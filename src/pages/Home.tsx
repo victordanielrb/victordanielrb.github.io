@@ -11,6 +11,9 @@ import { useLanguage } from '../context/LanguageContext'
 function HomeContent() {
   const { t } = useLanguage()
 
+  // Educational (non-personal) work is listed first.
+  const projects = [...t.projectList].sort((a, b) => (a.personal ? 1 : 0) - (b.personal ? 1 : 0))
+
   return (
     <div className="min-h-full text-white">
       <Navbar />
@@ -34,7 +37,7 @@ function HomeContent() {
           <section id="projects" className="animate-fade-in-up">
             <SectionHeading>{t.projects.title}</SectionHeading>
             <div className="border-t-[3px] border-zinc-100/15">
-              {t.projectList.map((project, i) => (
+              {projects.map((project, i) => (
                 <ProjectCard key={project.title} project={project} index={i + 1} />
               ))}
             </div>

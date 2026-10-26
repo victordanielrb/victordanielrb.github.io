@@ -6,6 +6,10 @@
   }
   html {
     scroll-behavior: smooth;
+    /* Reserve the scrollbar gutter permanently. The project modal locks body
+       scroll, which would otherwise remove the scrollbar and widen the
+       viewport — reflowing fixed elements (navbar, About card) mid-animation. */
+    scrollbar-gutter: stable;
   }
   body {
     background-color: #0a0a0b;
@@ -16,6 +20,13 @@
   body,
   #root {
     height: 100%;
+  }
+  /* Tailwind v4 dropped the pointer cursor it used to put on buttons, so every
+     control in the UI would otherwise show the default arrow. Anchors already
+     get it from the UA stylesheet. */
+  button:not(:disabled),
+  [role='button'] {
+    cursor: pointer;
   }
 }
 
@@ -59,6 +70,79 @@
 .brutal-hover:hover {
   box-shadow: var(--brutal-x) var(--brutal-y) 0 0 var(--brutal-color);
   transform: translate(calc(var(--brutal-x) * -1), calc(var(--brutal-y) * -1));
+}
+
+/* Cursor sticker — a small rotated sticker that trails the pointer, grows over
+   interactive targets, and presses into its own shadow on click. Rendered only
+   where a fine pointer with hover exists; the native cursor is never hidden, so
+   text selection, I-beam affordances and assistive tech keep working. Position
+   is written by JS (one frame-coalesced write per rAF); the transform
+   transition below is what gives the sticker its trailing lag. */
+.cursor-sticker {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 60;
+  width: 26px;
+  height: 26px;
+  margin: -13px 0 0 -13px;
+  display: none;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cursor-sticker {
+    display: block;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor-sticker {
+    display: none;
+  }
+}
+
+.cursor-sticker[data-placed='true'] {
+  /* Only once the first position has landed, otherwise the sticker flies in
+     from the top-left corner. This lag is what makes it trail the pointer. */
+  transition: transform 80ms linear, opacity 0.2s ease;
+}
+
+.cursor-sticker[data-visible='true'] {
+  opacity: 1;
+}
+
+.cursor-sticker__body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border: 2px solid var(--color-zinc-100);
+  border-radius: 12px;
+  background-color: #131315;
+  box-shadow: 4px 4px 0 0 var(--color-purple-500);
+  transform: rotate(-6deg);
+  transition:
+    transform 0.15s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cursor-sticker__mark {
+  width: 6px;
+  height: 6px;
+  background-color: var(--color-purple-500);
+}
+
+.cursor-sticker[data-interactive='true'] .cursor-sticker__body {
+  transform: rotate(-6deg) scale(1.3);
+}
+
+.cursor-sticker[data-press='true'] .cursor-sticker__body {
+  transform: rotate(-6deg) translate(4px, 4px) scale(1.15);
+  box-shadow: 0 0 0 0 var(--color-purple-500);
 }
 
 @keyframes thumb-in {

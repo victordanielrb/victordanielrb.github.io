@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { createPortal } from 'react-dom'
 import type { Project } from '../i18n/translations'
 import Tag from './Tag'
+import ProjectBadge from './ProjectBadge'
 import ProjectModal from './ProjectModal'
 
 const TAG_PREVIEW_COUNT = 3
@@ -72,11 +73,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
               <h3 className="font-display text-xl sm:text-3xl font-black uppercase tracking-tight text-white group-hover:text-purple-300 transition-colors duration-300">
                 {project.title}
               </h3>
-              {project.personal && (
-                <span className="text-[10px] sm:text-xs font-bold uppercase px-2 py-0.5 rounded-full border-[2px] border-zinc-100 bg-purple-500 text-white">
-                  Personal
-                </span>
-              )}
+              <ProjectBadge project={project} className="text-[10px] sm:text-xs" />
             </div>
 
             <div className="flex flex-wrap gap-1.5">

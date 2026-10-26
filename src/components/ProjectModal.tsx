@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom'
 import type { Project } from '../i18n/translations'
 import { useLanguage } from '../context/LanguageContext'
 import Tag from './Tag'
+import ProjectBadge from './ProjectBadge'
 
 interface Props {
   project: Project
@@ -19,14 +20,11 @@ export default function ProjectModal({ project, onClose }: Props) {
   }
 
   useEffect(() => {
-    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth
     document.body.style.overflow = 'hidden'
-    document.body.style.paddingRight = `${scrollbarWidth}px`
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') close() }
     window.addEventListener('keydown', onKey)
     return () => {
       document.body.style.overflow = ''
-      document.body.style.paddingRight = ''
       window.removeEventListener('keydown', onKey)
     }
   }, [])
@@ -62,11 +60,7 @@ export default function ProjectModal({ project, onClose }: Props) {
           <div className="p-6 space-y-4">
             <div className="flex items-center gap-2 flex-wrap pr-10">
               <h2 className="font-display text-white font-black uppercase tracking-tight text-xl">{project.title}</h2>
-              {project.personal && (
-                <span className="font-display text-[11px] font-bold uppercase px-2 py-0.5 rounded-full border-[2px] border-zinc-100 bg-purple-500 text-white">
-                  {t.projects.personalBadge}
-                </span>
-              )}
+              <ProjectBadge project={project} className="font-display text-[11px]" />
             </div>
 
             <p className="text-zinc-400 text-sm leading-relaxed">{project.description}</p>
